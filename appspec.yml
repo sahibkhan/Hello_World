@@ -4,17 +4,14 @@ files:
   - source: /myapp
     destination: /var/www
 hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
   AfterInstall:
-    - location: scripts/install_dependencies
-      timeout: 300
+    - location: scripts/post_install.sh
+      timeout: 30
       runas: root
-    - location: scripts/codestar_remote_access
+  ApplicationStart:
+    - location: scripts/start.sh
       timeout: 300
-      runas: root
-    - location: scripts/start_server
-      timeout: 300
-      runas: root
-  ApplicationStop:
-    - location: scripts/stop_server
-      timeout: 300
-      runas: root
